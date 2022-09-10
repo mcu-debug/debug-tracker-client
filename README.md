@@ -23,5 +23,4 @@ npm run compile
 7. In this new "[Extension Development Host]" window, open any directory with a program available to debug
 8. Start a debug session in the "[Extension Development Host]". Observe the tracking information in the Console of the "debug-tracker-client" VSCode Window
 
-You may see extra interesting events that you normally do not see via the vscode APIs -- not that easily anyways.
- 
+You may see extra interesting events that you normally do not see via the vscode APIs -- not that easily anyways. This example is setup to activate on any debug session starting and this in turn will activate the tracker extension. It is possible that we can miss the beginning of the debug-initialization. Please report that issue if you notice it.
