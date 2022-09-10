@@ -9,15 +9,15 @@ Sorry but there are some manual steps required that if everything was published,
 1. This is temporary until the tracker is available from the marketplace. Follow the instructions in [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) to install the extension manually and to create an npm package
 2. Clone this repo and change directory to it
 3. Edit the following line in `package.json` to contain the package created in the first step. Also a temporary step
-```JSON
-     "debug-tracker-vscode": "file:../debug-tracker-vscode/debug-tracker-vscode-0.0.1.tgz",
-```
+   ```JSON
+        "debug-tracker-vscode": "file:../debug-tracker-vscode/debug-tracker-vscode-0.0.1.tgz",
+   ```
 4. Run the following commands in a shell
-```bash
-rm package-lock.json
-npm install
-npm run compile
-```
+   ```bash
+   rm package-lock.json
+   npm install
+   npm run compile
+   ```
 5. Open this folder in VSCode
 6. Start a debug session `"Run Extension"` which will launch a new Window for an "[Extension Development Host]"
 7. In this new "[Extension Development Host]" window, open any directory with a program available to debug
