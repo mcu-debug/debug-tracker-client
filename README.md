@@ -8,10 +8,12 @@ Sorry but there are some manual steps required that if everything was published,
 
 1. This is temporary until the tracker is available from the marketplace. Follow the instructions in [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) to install the extension manually and to create an npm package
 2. Clone this repo and change directory to it
-3. Edit the following line in `package.json` to contain the package created in the first step. Also a temporary step
+3. Edit the following line in `package.json`. You can use the `tgz` file created in the first step or if you have installed the tracker extension,
+   you can use it from the vscode extensions directory ~/.vscode/extensions/mcu-debug.debug-tracker-vscode-X-Y-Z
    ```JSON
-        "debug-tracker-vscode": "file:../debug-tracker-vscode/debug-tracker-vscode-0.0.1.tgz",
+        "debug-tracker-vscode": "file:../debug-tracker-vscode/debug-tracker-vscode-X.Y.Z.tgz",
    ```
+   This is a stop-gap situation until we put this to `npm`
 4. Run the following commands in a shell
    ```bash
    rm package-lock.json
