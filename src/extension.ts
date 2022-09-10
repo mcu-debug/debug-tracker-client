@@ -1,13 +1,13 @@
 import * as vscode from 'vscode';
 import {
-	DebugTracker,
+	IDebugTracker,
 	IDebuggerTrackerSubscribeArg,
 	IDebuggerTrackerEvent,
 	IDebuggerSubscription
 } from 'debug-tracker-vscode';
 
 const TRACKER_EXT_ID = 'mcu-debug.debug-tracker-vscode';
-let trackerApi: DebugTracker;
+let trackerApi: IDebugTracker;
 let trackerApiClientInfo: IDebuggerSubscription;
 
 // this method is called when your extension is activated
@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
-	const trackerExt = vscode.extensions.getExtension<DebugTracker>(TRACKER_EXT_ID);
+	const trackerExt = vscode.extensions.getExtension<IDebugTracker>(TRACKER_EXT_ID);
 	if (!trackerExt) {
 		// Maybe we can go ahead install it. Ideally, it should be installed as a dependency
 		vscode.window.showErrorMessage(`Extension ${TRACKER_EXT_ID} not installed`);
