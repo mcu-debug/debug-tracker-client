@@ -4,6 +4,8 @@ This repo is to demonstrate the use of the debug-tracker-vscode extension. Any c
 
 ## Usage
 
+Sorry but there are some manual steps required that if everything was published, would be simpler. But, we are in a pre-release stage
+
 1. This is temporary until the tracker is available from the marketplace. Follow the instructions in [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) to install the extension manually and to create an npm package
 2. Clone this repo and change directory to it
 3. Edit the following line in `package.json` to contain the package created in the first step. Also a temporary step
