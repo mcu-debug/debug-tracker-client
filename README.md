@@ -1,71 +1,25 @@
 # debug-tracker-client README
 
-This is the README for your extension "debug-tracker-client". After writing up a brief description, we recommend including the following sections.
+This repo is to demonstrate the use of the debug-tracker-vscode extension. Any client interested in tracking debuggers can use that extension and this extension gives you a sample.
 
-## Features
+## Usage
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+1. This is temporary until the tracker is available from the marketplace. Follow the instructions in [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) to install the extension manually and to create an npm package
+2. Clone this repo and change directory to it
+3. Edit the following line in `package.json` to contain the package created in the first step. Also a temporary step
+```JSON
+     "debug-tracker-vscode": "file:../debug-tracker-vscode/debug-tracker-vscode-0.0.1.tgz",
+```
+4. Run the following commands in a shell
+```bash
+rm package-lock.json
+npm install
+npm run compile
+```
+5. Open this folder in VSCode
+6. Start a debug session `"Run Extension"` which will launch a new Window for an "[Extension Development Host]"
+7. In this new "[Extension Development Host]" window, open any directory with a program available to debug
+8. Start a debug session in the "[Extension Development Host]". Observe the tracking information in the Console of the "debug-tracker-client" VSCode Window
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+You may see extra interesting events that you normally do not see via the vscode APIs -- not that easily anyways.
+ 

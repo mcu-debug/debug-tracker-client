@@ -1,23 +1,28 @@
 {
   "name": "debug-tracker-client",
   "displayName": "debug-tracker-client",
-  "description": "Example usage of a debug-tracker-vscode client",
+  "description": "Example usage of a debug-tracker-vscode extension",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.71.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcu-debug/debug-tracker-client.git"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:debug-tracker-client.helloWorld"
+    "onCommand:debug-tracker-client.start",
+    "onDebug"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "debug-tracker-client.helloWorld",
-        "title": "Hello World"
+        "command": "debug-tracker-client.start",
+        "title": "Debug Tracker Client: Start"
       }
     ]
   },
@@ -48,5 +53,8 @@
     "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
-  }
+  },
+  "extensionDependencies": [
+    "mcu-debug.debug-tracker-vscode"
+  ]
 }
