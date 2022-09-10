@@ -1,10 +1,10 @@
 # debug-tracker-client README
 
-This repo is to demonstrate the use of the debug-tracker-vscode extension. Any client interested in tracking debuggers can use that extension and this extension gives you a sample.
+This repo is to demonstrate the use of the [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) extension. Any client interested in tracking debuggers can use `debug-tracker-vscode` extension and this extension gives you a sample. It invokes the API from the tracker extension for its own use.
 
 ## Usage
 
-Sorry but there are some manual steps required that if everything was published, would be simpler. But, we are in a pre-release stage
+Please know that we are still in alpha stage but feel free to try this out.
 
 1. This is temporary until the tracker is available from the VSCode marketplace. Follow the instructions in [debug-tracker-vscode](https://github.com/mcu-debug/debug-tracker-vscode) to install the extension manually and to create an npm package
 2. Clone this repo and change directory to it.
