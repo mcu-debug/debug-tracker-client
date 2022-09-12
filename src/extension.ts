@@ -38,10 +38,13 @@ export function activate(context: vscode.ExtensionContext) {
 			const arg: IDebuggerTrackerSubscribeArg = {
 				version: 1,
 				body: {
-					debuggers: '*',
-					handler: debugTrackerEventHandler,
+					debuggers: '*',						// All debuggers
+					// debuggers: ['cortex-debug'],
+					handler: debugTrackerEventHandler,	// Only this debugger
 					wantCurrentStatus: true,
-					notifyAllEvents: false
+					notifyAllEvents: false,
+					// Make sure you set debugLevel to zero for production
+					debugLevel: 2
 				}
 			};
 			const result = api.subscribe(arg);
