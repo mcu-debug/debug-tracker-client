@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 				version: 1,
 				body: {
 					debuggers: '*',						// All debuggers
-					// debuggers: ['cortex-debug'],
+					// debuggers: ['cortex-debug', 'cppdbg'],
 					handler: debugTrackerEventHandler,	// Only this debugger
 					wantCurrentStatus: true,
 					notifyAllEvents: false,
