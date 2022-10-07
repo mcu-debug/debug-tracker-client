@@ -16,6 +16,8 @@ Please know that we are still in alpha stage but feel free to try this out.
 4. Open this folder in VSCode
 5. Start a debug session `"Run Extension"` which will launch a new Window for an "[Extension Development Host]"
 6. In this new "[Extension Development Host]" window, open any directory with a program available to debug
-7. Start a debug session in the "[Extension Development Host]". Observe the tracking information in the Console of the "debug-tracker-client" VSCode Window
+7. Start any debug session in the "[Extension Development Host]". Observe the tracking information in the Console of the "debug-tracker-client" VSCode Window
+
+You can test this extension either as a client of the extension mcu-debug.debug-tracker-vscode or create your own copy of a debug tracker. The extension's activate function can do either by changing the const `useLocal` to true or false.
 
 You may see extra interesting events that you normally do not see via the vscode APIs -- not that easily anyways. This example is setup to activate on any debug session starting and this in turn will activate the tracker extension. It is possible that we can miss the beginning of the debug-initialization. Please report that issue if you notice it.

@@ -3,7 +3,9 @@ import {
 	IDebugTracker,
 	IDebuggerTrackerSubscribeArg,
 	IDebuggerTrackerEvent,
-	IDebuggerSubscription
+	IDebuggerSubscription,
+	DebugSessionStatus,
+	DebugTracker
 } from 'debug-tracker-vscode';
 
 const TRACKER_EXT_ID = 'mcu-debug.debug-tracker-vscode';
@@ -13,13 +15,10 @@ let trackerApiClientInfo: IDebuggerSubscription;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "debug-tracker-client" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
+	// package.json has been setup so any start of a debug session triggers our activation but
+	// you can also start the extension manually
 	context.subscriptions.push(
 		vscode.commands.registerCommand('debug-tracker-client.start', () => {
 			// The code you place here will be executed every time your command is executed
@@ -28,6 +27,27 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
+	const arg: IDebuggerTrackerSubscribeArg = {
+		version: 1,
+		body: {
+			debuggers: '*',						// All debuggers
+			// debuggers: ['cortex-debug', 'cppdbg'],
+			handler: debugTrackerEventHandler,	// Only this debugger
+			wantCurrentStatus: true,
+			notifyAllEvents: false,
+			// Make sure you set debugLevel to zero for production
+			debugLevel: 2
+		}
+	};
+
+	// We can use either our own copy of a debug tracker or use a shared one.
+	const useLocal = false;
+	if (useLocal) {
+		trackerApi = new DebugTracker(context);
+		trackerApi.subscribe(arg);
+		return;
+	}
+
 	const trackerExt = vscode.extensions.getExtension<IDebugTracker>(TRACKER_EXT_ID);
 	if (!trackerExt) {
 		// Maybe we can go ahead install it. Ideally, it should be installed as a dependency
@@ -35,20 +55,8 @@ export function activate(context: vscode.ExtensionContext) {
 	} else {
 		trackerExt.activate().then((api) => {
 			trackerApi = api;
-			const arg: IDebuggerTrackerSubscribeArg = {
-				version: 1,
-				body: {
-					debuggers: '*',						// All debuggers
-					// debuggers: ['cortex-debug', 'cppdbg'],
-					handler: debugTrackerEventHandler,	// Only this debugger
-					wantCurrentStatus: true,
-					notifyAllEvents: false,
-					// Make sure you set debugLevel to zero for production
-					debugLevel: 2
-				}
-			};
-			const result = api.subscribe(arg);
-			if (typeof result === 'string') {
+			const result = api.subscribe && api.subscribe(arg);
+			if (!result || (typeof result === 'string')) {
 				vscode.window.showErrorMessage(`Subscription failed with extension ${TRACKER_EXT_ID} : ${result}`);
 			} else {
 				trackerApiClientInfo = result;
@@ -69,4 +77,7 @@ export function deactivate() {
 
 async function debugTrackerEventHandler(event: IDebuggerTrackerEvent) {
 	console.log('debug-tracker-client: Got event', event);
+	if (event.event === DebugSessionStatus.Initializing) {
+		console.log('debug-tracker-client: NEW SESSION!!!!');
+	}
 }
