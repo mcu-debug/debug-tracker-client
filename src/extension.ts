@@ -27,44 +27,42 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
-	const arg: IDebuggerTrackerSubscribeArg = {
-		version: 1,
-		body: {
-			debuggers: '*',						// All debuggers
-			// debuggers: ['cortex-debug', 'cppdbg'],
-			handler: debugTrackerEventHandler,	// Only this debugger
-			wantCurrentStatus: true,
-			notifyAllEvents: false,
-			// Make sure you set debugLevel to zero for production
-			debugLevel: 2
-		}
+	// We can use either our own copy of a debug tracker or use a shared one.
+	const doSubscribe = () => {
+		const arg: IDebuggerTrackerSubscribeArg = {
+			version: 1,
+			body: {
+				debuggers: '*',						// All debuggers
+				// debuggers: ['cortex-debug', 'cppdbg'], 	// Only these debugger
+				handler: debugTrackerEventHandler,
+				wantCurrentStatus: true,
+				notifyAllEvents: false,
+				// Make sure you set debugLevel to zero for production
+				debugLevel: 2
+			}
+		};
+
+		const result = trackerApi.subscribe && trackerApi.subscribe(arg);
+		if (!result || (typeof result === 'string')) {
+			vscode.window.showErrorMessage(`Subscription failed with extension ${TRACKER_EXT_ID} : ${result}`);
+		} else {
+			trackerApiClientInfo = result;
+		}		
 	};
 
-	// We can use either our own copy of a debug tracker or use a shared one.
 	const useLocal = false;
 	if (useLocal) {
 		trackerApi = new DebugTracker(context);
-		trackerApi.subscribe(arg);
-		return;
-	}
-
-	const trackerExt = vscode.extensions.getExtension<IDebugTracker>(TRACKER_EXT_ID);
-	if (!trackerExt) {
-		// Maybe we can go ahead install it. Ideally, it should be installed as a dependency
-		vscode.window.showErrorMessage(`Extension ${TRACKER_EXT_ID} not installed`);
+		doSubscribe();
 	} else {
-		trackerExt.activate().then((api) => {
-			trackerApi = api;
-			const result = api.subscribe && api.subscribe(arg);
-			if (!result || (typeof result === 'string')) {
-				vscode.window.showErrorMessage(`Subscription failed with extension ${TRACKER_EXT_ID} : ${result}`);
+		DebugTracker.getTrackerExtension('debug-tracker-client').then((ret) => {
+			if (ret instanceof Error) {
+				vscode.window.showErrorMessage(ret.message);
 			} else {
-				trackerApiClientInfo = result;
+				trackerApi = ret;
+				doSubscribe();
 			}
-		}),
-		(e: any) => {
-			vscode.window.showErrorMessage(`Activation of extension ${TRACKER_EXT_ID} failed: ${e}`);
-		};
+		});
 	}
 }
 

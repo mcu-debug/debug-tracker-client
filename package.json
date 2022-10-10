@@ -21,8 +21,9 @@
   "contributes": {
     "commands": [
       {
+        "category": "Debug Tracker Client",
         "command": "debug-tracker-client.start",
-        "title": "Debug Tracker Client: Start"
+        "title": "Start Extension"
       }
     ]
   },
@@ -57,6 +58,6 @@
     "mcu-debug.debug-tracker-vscode"
   ],
   "dependencies": {
-    "debug-tracker-vscode": "^0.0.10"
+    "debug-tracker-vscode": "^0.0.11"
   }
 }
